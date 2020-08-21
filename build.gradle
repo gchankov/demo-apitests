@@ -42,5 +42,5 @@ task deleteCucumberReports(type: Delete) {
 
 task runTests (type: Test){
     dependsOn(deleteCucumberReports)
-    systemProperty "target.environment", System.getProperty("target.environment")
+    systemProperty "target.environment", System.getProperty("target.environment", "tst")
 }
