@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'org.demo-apitests'
+version '1.0.0'
+
+wrapper.gradleVersion = '5.5.1'
+def cucumberVersion = '4.7.4'
+def junitVersion = '5.6.1'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    testImplementation 'io.rest-assured:rest-assured:4.3.0'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task deleteCucumberReports(type: Delete) {
+    dependsOn(clean)
+
+    delete 'out', 'target', 'build'
+}
+
+task runTests (type: Test){
+    dependsOn(deleteCucumberReports)
+    systemProperty "target.environment", System.getProperty("target.environment")
+}
