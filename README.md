@@ -1,3 +1,3 @@
 # demo-apitests
 
-./gradlew runTests -Dtarget.environmet=<tst, stg, prod>
+./gradle runTests -Dtarget.environmet=<tst, stg, prod>
